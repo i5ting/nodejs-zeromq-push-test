@@ -1,4 +1,7 @@
 // worker.js
+var log4js = require('log4js');
+var logger = log4js.getLogger();
+
 var zmq = require('zmq')
   , sock = zmq.socket('pull');
 
@@ -9,10 +12,11 @@ var msgpack = require('msgpack5')() // namespace our extensions
   , encode  = msgpack.encode
   , decode  = msgpack.decode
 
+
 var i = 0;
 sock.on('message', function(msg){
   i++;
-  console.log(msg)
+  logger.debug("Some debug messages" + msg);
   var o = decode(msg)
   
   var json = JSON.stringify(o);
@@ -25,4 +29,6 @@ sock.on('message', function(msg){
   }else{
       console.dir(json.headimgurl);
   }
+  
+  
 });

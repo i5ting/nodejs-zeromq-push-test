@@ -1,4 +1,7 @@
 // producer.js
+var log4js = require('log4js');
+var logger = log4js.getLogger();
+
 var zmq = require('zmq')
   , sock = zmq.socket('push');
 
@@ -39,7 +42,7 @@ setInterval(function(){
   }
   
   var b = encode(a)//.toString('hex');
-   
-  console.log(b);
+  
+  logger.debug("Some debug messages" + b);
   sock.send(b);
 }, 5);
